@@ -1,0 +1,93 @@
+			<div id="content">
+				<div class="container">
+					<div class="row">	
+						<div class="alert alert-info">
+							<table class="table">
+								<tr>
+									<td><a href="./index.php?Controller/sucess">View User</a></td>
+								</tr>
+							</table>
+                                <table class="table">
+                                    <tr>
+                                        <td>Name</td>
+                                        <td><input type="text" name="fullname" id="fullname" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td><input type="text" name="email" id="email" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Password</td>
+                                        <td><input type="password" name="passw" id="passw" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address</td>
+                                        <td><input type="text" name="address" id="address" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Role</td>
+                                        <td>
+                                            <select name="role" id="role">
+                                                <option value="1">Admin</option>
+                                                <option value="2" selected>User</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" align="center"><input type="submit" class="submit" id="save_user" value="SAVE"></td>
+                                    </tr>
+                                </table>
+						</div>	
+					</div>	
+				</div>
+<script type="text/javascript">
+    $( document ).ready(function(){
+        $( "#save_user" ).click(function() { 
+            var fullname = $.trim($("#fullname").val());
+            var email = $.trim($("#email").val());
+            var password = $.trim($("#passw").val());
+            var address = $.trim($("#address").val());
+            var role = $("#role").val();
+            if(fullname == ""){
+                alert("Please enter name");
+                $("#fullname").focus();
+                return false;
+            }
+            if(email == ""){
+                alert("Please enter email");
+                $("#email").focus();
+                return false;
+            }
+            if(password == ""){
+                alert("Please enter password");
+                $("#passw").focus();
+                return false;
+            }
+            var requestData = '{"name": '+name+',"&email":'+email+', "&password":'+password+', "&address":'+ address+', "&role" :'+role+'}';
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost/rest-user-api/user/',
+                data: {
+                    name : fullname,
+                    email : email,
+                    password : password,
+                    address : address,
+                    role : role
+                }
+            })
+            .done(function(data){
+                alert("added succfully");
+                $("#fullname").val('');
+                $("#email").val('');
+                $("#passw").val('');
+                $("#address").val('');
+            })
+            .fail(function() {
+                alert( "Posting failed." );     
+            });
+     
+            // to prevent refreshing the whole page page
+            return false;
+        });
+    });
+</script>

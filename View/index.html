@@ -1,0 +1,26 @@
+			<div id="content">
+				<div class="container">
+					<div class="row">					
+							<div class="alert alert-info"><h4>User Login</h4></div>
+								<div class="control-group">
+										<label class="control-label" for="username">Username:</label>
+										<div class="controls">				      
+											<input type="text" id="username" name="username" placeholder="Username" autocomplete="off" onBlur="if(this.value=='') this.value='Username'" onFocus="if(this.value =='Username' ) this.value=''">
+										</div>
+									</div>
+
+									<div class="control-group">
+										<label class="control-label" for="user_password">Password:</label>
+										<div class="controls">				      
+											<input type="password" id="user_password" name="user_password" placeholder="Password" autocomplete="off" onBlur="if(this.value=='') this.value='Password'" onFocus="if(this.value =='Password' ) this.value=''">
+										</div>
+									</div>
+
+									<input type="button" class="submit" id="login_btn" value="LOGIN">
+									<div id="error_display" class="alert alert-danger hide"></div>
+							</div>	
+							<div>
+								<a href="./index.php?Controller/forgotpassword">forgot password</a>
+							</div>
+					</div>	
+				</div>

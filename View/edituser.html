@@ -1,0 +1,70 @@
+			<div id="content">
+				<div class="container">
+					<div class="row">	
+						<div class="alert alert-info">
+							<table class="table">
+								<tr>
+									<td><a href="./index.php?Controller/sucess">View User</a></td>
+								</tr>
+							</table>
+                                <table class="table">
+                                    <tr>
+                                        <td>Name</td>
+                                        <td><input type="text" name="fullname" id="fullname" value="<?php echo $fullname ?>"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td><input type="text" name="email" id="email" value="<?php echo $email ?>"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address</td>
+                                        <td><input type="text" name="address" id="address" value="<?php echo $address ?>"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Role</td>
+                                        <td>
+                                            <select name="role" id="role">
+                                                <option value="1">Admin</option>
+                                                <option value="2" selected>User</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" align="center"><input type="submit" class="submit" id="edit_user" value="SAVE">
+                                            <input type="hidden" name="uid" id="uid" value="<?php echo $userid ?>"/></td>
+                                    </tr>
+                                </table>
+						</div>	
+					</div>	
+				</div>
+<script type="text/javascript">
+    $( document ).ready(function(){
+        $( "#edit_user" ).click(function() { 
+            var fullname = $("#fullname").val();
+            var email = $("#email").val();
+            var address = $("#address").val();
+            var role = $("#role").val();
+            var id = $("#uid").val();
+            $.ajax({
+                type: 'PUT',
+                url: 'http://localhost/rest-user-api/user/', 
+                data: {
+                    name : fullname,
+                    email : email,
+                    address : address,
+                    role : role,
+                    userID: id
+                }
+            })
+            .done(function(data){
+                alert("updated succfully");
+            })
+            .fail(function() {
+                alert( "Posting failed." );     
+            });
+     
+            // to prevent refreshing the whole page page
+            return false;
+        });
+    });
+</script>

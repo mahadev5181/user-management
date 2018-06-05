@@ -1,0 +1,59 @@
+			<div id="content">
+				<div class="container">
+					<div class="row">	
+						<div class="alert alert-info">
+							<table class="table">
+								<tr>
+									<td><a href="./index.php?Controller/newuser">Add User</a></td>
+								     <td><a href="./index.php?Controller/logout">LOGOUT</a></td>
+                                </tr>
+                                
+							</table>
+							<table id="resultSet" class="table">
+							
+							</table>
+						</div>	
+					</div>	
+				</div>
+<script type="text/javascript">
+	$( document ).ready(function(){
+            getUsers();
+    });
+    function getUsers(){
+        $.ajax({
+                url: 'http://localhost/rest-user-api/user/',
+                type: 'get',
+                success: function(dataSet){
+                    var data = JSON.parse(dataSet); 
+                    if(data['status'] == 1){
+                        var SrNo = 0;
+                        var resultHtml = "<tr><td>Sr No</td><td>Name</td><td>Email</td><td>Role</td><td>Action</td></tr>";
+                        $.each(data['result'], function (index, value) {
+                            SrNo++;
+                            var role = 'admin';
+                            if(value['role'] == 2){
+                                role = 'User';
+                            }
+                            resultHtml += "<tr><td>"+SrNo+"</td><td>"+value['name']+"</td><td>"+value['email']+"</td><td>"+role+"</td><td><a href='./index.php?Controller/edituser/"+value['id']+"'>Edit</a> | <a href='#' onclick='deleteUser("+value['id']+")'>Delete</a></td></tr>";
+                        });
+                        $('#resultSet').html(resultHtml);
+                    }else{
+                        $('#resultSet').html("<td colspan='5'>No reocrds found</td>");
+                    }   
+                }
+            });
+    }
+    function deleteUser(id){
+            $.ajax({
+                type: 'DELETE',
+                url: 'http://localhost/rest-user-api/user/', 
+                data: {
+                    userID : id
+                }
+            })
+            .done(function(data){
+                alert("deleted succfully");
+                getUsers();
+            });
+    }
+</script>
